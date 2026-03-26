@@ -4,7 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 
-const SITE_URL = "https://flappyboards.com";
+const SITE_URL = "https://flappyboards.xyz";
 
 export const metadata: Metadata = {
   title: "FlappyBoards — Turn any TV into a retro split-flap display",
@@ -23,21 +23,12 @@ export const metadata: Metadata = {
     type: "website",
     url: SITE_URL,
     siteName: "FlappyBoards",
-    images: [
-      {
-        url: `${SITE_URL}/og-image.svg`,
-        width: 1200,
-        height: 630,
-        alt: "FlappyBoards — Retro split-flap display emulator",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "FlappyBoards",
     description: "Turn any TV into a retro split-flap display. Free & open source.",
     creator: "@vec0zy",
-    images: [`${SITE_URL}/og-image.svg`],
   },
   authors: [{ name: "Cozy", url: "https://x.com/vec0zy" }],
   creator: "Cozy",
