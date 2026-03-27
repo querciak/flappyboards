@@ -16,6 +16,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 import MusicPlayer from "@/components/music/MusicPlayer";
 import { useMusicStore } from "@/stores/music-store";
 import { formatNowPlaying } from "@/lib/content/now-playing";
+import { fetchWeather } from "@/lib/content/weather";
 
 export default function DisplayPage() {
   const boardRef = useRef<SplitFlapBoardRef>(null);
@@ -64,9 +65,24 @@ export default function DisplayPage() {
       await showMessage(npLines);
       return;
     }
+    
+    // Show weather every other time (if no music or skipped)
+    if (rotationCountRef.current % 2 === 1) {
+      try {
+        const w = await fetchWeather(46.1667, 9.8333);
+        if (w) {
+          await showMessage(w.lines);
+          return;
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
     const content = rotatorRef.current.next();
     await showMessage(content.lines);
   }, [showMessage, musicIsPlaying, musicSource, currentTrack]);
+
 
   // Initial message + auto-rotation
   useEffect(() => {
@@ -132,11 +148,11 @@ export default function DisplayPage() {
             opacity: 0.55,
           }}
         >
-          MADE WITH &#9825; BY COZY
+          MADE WITH &#9825; BY COZY X ANDI
         </p>
         <div style={{ display: "flex", gap: 16, alignItems: "center", pointerEvents: "auto" }}>
           <a
-            href="https://x.com/vec0zy"
+            href="https://instagram.com/querciax"
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -149,12 +165,14 @@ export default function DisplayPage() {
             onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
             onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.5")}
           >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
             </svg>
           </a>
           <a
-            href="https://github.com/vxcozy"
+            href="https://github.com/querciak/flappyboards"
             target="_blank"
             rel="noopener noreferrer"
             style={{
